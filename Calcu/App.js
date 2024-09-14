@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 export default function App() {
   const [firstNumber, setFirstNumber] = useState('');
@@ -7,6 +7,12 @@ export default function App() {
   const [result, setResult] = useState(null);
 
   const handleOperation = (operation) => {
+    // Input validation: Check if inputs are provided
+    if (firstNumber === '' || secondNumber === '') {
+      Alert.alert('Missing Input', 'Please enter both numbers.');
+      return;
+    }
+
     const num1 = parseFloat(firstNumber);
     const num2 = parseFloat(secondNumber);
 
@@ -27,6 +33,10 @@ export default function App() {
         res = num1 * num2;
         break;
       case 'divide':
+        if (num2 === 0) {
+          Alert.alert('Invalid Operation', 'Division by zero is not allowed.');
+          return;
+        }
         res = num1 / num2;
         break;
       default:
